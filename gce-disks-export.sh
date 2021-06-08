@@ -113,7 +113,8 @@ for diskname in $GCE_DISKS
 			--force
 		echo "---"
 		echo "Export disk image $diskname.$IMAGE_FORMAT to Cloud Storage Bucket: $BUCKET_NAME"
-		gcloud alpha compute images export \
+		# gcloud alpha compute images export \
+		gcloud compute images export \
 				--destination-uri gs://$BUCKET_NAME/$diskname.$IMAGE_FORMAT \
 				--image $diskname \
 				--export-format $IMAGE_FORMAT
