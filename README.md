@@ -29,7 +29,7 @@ Script will not ask you disk to export, if you want to export all available disk
 Before running the script create a **new bucket on Google Storage**, make sure you have set right permissions on bucket.
 
 ```
-$ ./gce-export [GCP_Project [GCP_Zone] [GCP_Region] [GCP_Instance_Name] [GCP_Instance_Disk_Name] BUCKET_NAME [IMAGE_FORMAT]
+$ ./gce-export [GCP_Project] [GCP_Zone] [GCP_Region] [GCP_Instance_Name] [GCP_Instance_Disk_Name] BUCKET_NAME [IMAGE_FORMAT]
 
 # Without format, use vmdk as default
 $ ./gce-export my-bucket-name
