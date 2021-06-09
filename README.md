@@ -4,13 +4,12 @@
 Export Google Cloud instances disks in your favorite format and store in [Cloud Storage](https://cloud.google.com/storage/).
 Supported image formats are `vmdk` (default), `vhdx`, `vpc`, `vdi`, and `qcow2`.
 
-## How script works 
+## How script works,for each instance 
 
-1. Retrieve all GCE instances, from specified project or your current Google project   
-2. For each instances, it Select automatically all disks on your current Google Project
-3. Creates a new image for each selected disk
-4. Stores all images in a Google Storage bucket 
-5. Removes all images from Google Cloud
+1. Selects automatically all disks on your current/specified Google Project   
+2. Creates a new image for each selected disk
+3. Stores all images in a Google Storage bucket
+4. Removes all images from Google Cloud 
 
 You can run the script from your **bash console** or from [Google Cloud Shell](https://cloud.google.com/shell/docs/quickstart).
 You need login in **Google Cloud SDK** before running script, for a fast execution run it in **Cloud Shell**
@@ -20,24 +19,23 @@ Script will not ask you disk to export, if you want to export all available disk
 ## Requirements
 
 - [Google Cloud SDK](https://cloud.google.com/sdk/)
-  - _gcloud_
-  - _gsutil_
-  - _alpha commands_
-- Bash CLI
-- JQ parser
+  - gcloud
+  - gsutil
+  - Bash CLI
+  - JQ parser
 
 ## Export disks
 
 Before running the script create a **new bucket on Google Storage**, make sure you have set right permissions on bucket.
 
 ```
-$ ./gce-disks-export BUCKET_NAME [IMAGE_FORMAT]
+$ ./gce-export [GCP_Project [GCP_Zone] [GCP_Region] [GCP_Instance_Name] [GCP_Instance_Disk_Name] BUCKET_NAME [IMAGE_FORMAT]
 
 # Without format, use vmdk as default
-$ ./gce-disks-export my-bucket-name
+$ ./gce-export my-bucket-name
 
 # Export as qcow2 image format
-$ ./gce-disks-export my-bucket-name qcow2
+$ ./gce-export my-bucket-name qcow2
 ``` 
 
 #### Cloud Build Activation
