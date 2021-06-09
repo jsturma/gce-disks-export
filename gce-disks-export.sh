@@ -7,6 +7,12 @@
 ## This software comes with ABSOLUTELY NO WARRANTY.
 ## This is free software, and you are welcome to redistribute it under certain conditions.
 ## More info about me visit: https//particles.io
+##
+##	echo "MIT License | Copyright (c) 2021 Jean Sturma"
+##	echo "GitHub repository: https://github.com/jsturma/gce-disks-export"
+##
+## This software comes with ABSOLUTELY NO WARRANTY.
+## This is free software, and you are welcome to redistribute it under certain conditions.
 
 GCE_DISKS=$(gcloud compute disks list | awk '{print $1}' | sed -n '2,$p')
 BUCKET_NAME=$1
@@ -19,12 +25,15 @@ usage() {
 	credits
 }
 
-credits() {
-	echo "---"
-	echo "MIT License | Copyright (c) 2019 Fabio Ferrari"
-	echo "GitHub repository: https://github.com/fabio-particles/gce-disks-export"
-	echo "---"
-}
+## credits() {
+##	echo "---"
+##	echo "MIT License | Copyright (c) 2019 Fabio Ferrari"
+##	echo "GitHub repository: https://github.com/fabio-particles/gce-disks-export"
+##	echo "---"
+##	echo "MIT License | Copyright (c) 2021 Jean Sturma"
+##	echo "GitHub repository: https://github.com/jsturma/gce-disks-export"
+##	echo "---"
+## }
 
 delete_image() {
 	echo "---"
@@ -122,5 +131,5 @@ for diskname in $GCE_DISKS
 		delete_image $diskname
 done
 
-credits
+## credits
 echo "Export is complete"
