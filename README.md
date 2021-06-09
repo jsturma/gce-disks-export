@@ -1,21 +1,21 @@
-# Google Compute Engine - Disks Export Tool
+# Under Contruction
+# Google Compute Engine - Export Command Line Tool
  
 Export Google Cloud instances disks in your favorite format and store in [Cloud Storage](https://cloud.google.com/storage/).
-
 Supported image formats are `vmdk` (default), `vhdx`, `vpc`, `vdi`, and `qcow2`.
 
 ## How script works 
 
-1. Selects all disks on your current Google Project
-2. Creates a new image for each selected disk
-3. Stores all images in a Google Storage bucket 
-4. Removes all images from Google Cloud
+1. Retrieve all GCE instances, from specified project or your current Google project   
+2. For each instances, it Select automatically all disks on your current Google Project
+3. Creates a new image for each selected disk
+4. Stores all images in a Google Storage bucket 
+5. Removes all images from Google Cloud
 
 You can run the script from your **bash console** or from [Google Cloud Shell](https://cloud.google.com/shell/docs/quickstart).
-
 You need login in **Google Cloud SDK** before running script, for a fast execution run it in **Cloud Shell**
 
-Script will ask you disk to export or if you want to export all available disks.
+Script will not ask you disk to export, if you want to export all available disks.
 
 ## Requirements
 
@@ -24,6 +24,7 @@ Script will ask you disk to export or if you want to export all available disks.
   - _gsutil_
   - _alpha commands_
 - Bash CLI
+- JQ parser
 
 ## Export disks
 
@@ -99,16 +100,8 @@ Available Cloud Storage classes:
 - 90-day minimum storage duration
 - Data you expect to access infrequently (i.e., no more than once per year)
 
-### Pricing (Update 02/05/2019)
-| Storage Class                | Price of 100 GB/month          |
-| ------                       | ------            |
-| Multi-Regional               | $ 2.60            |
-| Regional                     | $ 2.00            |
-| Nearline Multi-Regional      | $ 1.00            |
-| Nearline Regional            | $ 1.00            |
-| Coldline Multi-Regional      | $ 0.70            |
-| Coldline Regional            | $ 0.40            |
+### Pricing 
+- look into https://cloud.google.com/storage/pricing
 
 ## License
-
 MIT
