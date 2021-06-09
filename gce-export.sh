@@ -25,15 +25,6 @@ usage() {
 	credits
 }
 
-## credits() {
-##	echo "---"
-##	echo "MIT License | Copyright (c) 2019 Fabio Ferrari"
-##	echo "GitHub repository: https://github.com/fabio-particles/gce-disks-export"
-##	echo "---"
-##	echo "MIT License | Copyright (c) 2021 Jean Sturma"
-##	echo "GitHub repository: https://github.com/jsturma/gce-disks-export"
-##	echo "---"
-## }
 
 delete_image() {
 	echo "---"
@@ -131,5 +122,4 @@ for diskname in $GCE_DISKS
 		delete_image $diskname
 done
 
-## credits
 echo "Export is complete"
