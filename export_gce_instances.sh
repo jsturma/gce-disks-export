@@ -6,17 +6,15 @@
 ##
 ## This software comes with ABSOLUTELY NO WARRANTY.
 ## This is free software, and you are welcome to redistribute it under certain conditions.
+source $(pwd)/gce_export_funcs.sh
 OldIFS=$IFS
-logTime()
-{
-    local datetime="$(date +"%Y-%m-%d %T")"
-    echo -e "[$datetime]: $1"
-}
 ##
 ## gcloud compute instances list --format="json" | jq -r '.[] | [{"\(.name)","\(.zone)", "\(.disks[].source)"}]|@text'
 ## gcloud compute instances list --format="json" | jq -r '.[] |.name + "," + .zone + "," + .disks[].source'
 IFS=$'\n'
+logTime "Start GCP query to retrieve GCE instances list"
 GCE_VM_List=$(gcloud compute instances list --format="json" | jq -r '.[] |.name + "," + .zone + "," + .disks[].source')
+logTime "RC=$? - End of GCP Query to retrieve GCE instances list"
 Array_GCE_VM_List=($GCE_VM_List)
 ## logTime "Number of elements in the array: ${#Array_GCE_VM_List[@]}"
 for line in "${Array_GCE_VM_List[@]}";
@@ -27,10 +25,14 @@ do
    Array_GCE_VM_Details=($line)
    IFS=$OldIFS
    instance=${Array_GCE_VM_Details[0]}
-   project=$(echo "${Array_GCE_VM_Details[1]}"| awk -F'/' '{print $7}')
-   zone=$(echo "${Array_GCE_VM_Details[1]}"| awk -F'/' '{print $9}')
+   diskproject=$(echo "${Array_GCE_VM_Details[2]}"| awk -F'/' '{print $7}')
+   diskzone=$(echo "${Array_GCE_VM_Details[2]}"| awk -F'/' '{print $9}')
    # length of the zone is unkonwn, let's remove the last 2 chars to get the region
-   region=${zone%??}
-   disk=$(echo "${Array_GCE_VM_Details[2]}"| awk -F'/' '{print $11}')
-   logTime "Project: $project   Region: $region Zone: $zone Instance Name: $instance    Disk: $disk "
+   diskregion=${diskzone%??}
+   diskname=$(echo "${Array_GCE_VM_Details[2]}"| awk -F'/' '{print $11}')
+   img_diskname=$diskname"-"$(date -d 'today' "+%s")
+   logTime "Disk_Project: $diskproject Disk_Region: $diskregion Disk_Zone: $diskzone Instance Name: $instance Disk: $diskname ImageDisk: $img_diskname "
+   create_image
+   export_image
 done
+IFS=$OldIFS
