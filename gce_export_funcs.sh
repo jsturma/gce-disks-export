@@ -28,17 +28,40 @@ create_image(){
 		## 	--source-disk $diskname \
 		## 	--source-disk-zone $diskzone \
 		## 	--force
-	logTime "Image Creation is complete"
+		## rc=$?
+	rc=0 
+	if [ $rc -ne 0 ]
+	then
+	{
+		logTime "RC=$rc - Error during Image Creation"
+		exit 1
+	}
+	else
+		logTime "RC=$rc - Image Creation is complete";
+	fi
+		
 }
 
+# "Disk_Project: $diskproject Disk_Region: $diskregion Disk_Zone: $diskzone Instance Name: $instance Disk: $diskname ImageDisk: $img_diskname "
 export_image()
 { 
-  	logTime "Export disk image $diskname.$IMAGE_FORMAT to Cloud Storage Bucket: $BUCKET_NAME"
+  	Bucket_Uri="gs://$BUCKET_NAME/$diskproject/$diskregion/$diskzone/$export_date/$instance/$img_diskname.$IMAGE_FORMAT" 
+	logTime "Export disk image $img_diskname.$IMAGE_FORMAT to Cloud Storage Bucket: $BUCKET_NAME Uri:$Bucket_Uri"
 		## gcloud compute images export \
 		## 		--destination-uri gs://$BUCKET_NAME/$diskname.$IMAGE_FORMAT \
 		## 		--image $diskname \
 		## 		--export-format $IMAGE_FORMAT
 		## Delete image after exporting
 		## delete_image $diskname
-    logTime "Export is complete"
+		## rc=$?
+	rc=1 
+	if [ $rc -ne 0 ]
+	then
+	{
+		logTime "RC=$rc - Error during Export"
+		exit 1
+	}
+	else
+		logTime "RC=$rc - Export is complete";
+	fi
 }
