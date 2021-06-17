@@ -6,11 +6,17 @@
 ##
 ## This software comes with ABSOLUTELY NO WARRANTY.
 ## This is free software, and you are welcome to redistribute it under certain conditions.
+Func_Name="$0.Main"
 IMAGE_FORMAT=""
 BUCKET_NAME="js-project-images"
-source $(pwd)/gce_export_funcs.sh
+source $PWD/gce_export_funcs.sh
 OldIFS=$IFS
 ##
+export -f logTime
+export -f delete_image
+export -f create_image
+export -f export_image
+export -f export_instance 
 ##
 logTime "Check if Bucket $BUCKET_NAME exists"  
 if ! gsutil ls gs://$BUCKET_NAME > /dev/null 2>&1
@@ -52,7 +58,7 @@ then
       exit 1
    }
 else
-   logTime "RC=$? - End of GCP Query to retrieve GCE instances list";
+   logTime "RC=0 - End of GCP Query to retrieve GCE instances list";
 fi
 Array_GCE_VM_List=($GCE_VM_List)
 ## logTime "Number of elements in the array: ${#Array_GCE_VM_List[@]}"
@@ -69,10 +75,11 @@ do
    # length of the zone is unkonwn, let's remove the last 2 chars to get the region
    diskregion=${diskzone%??}
    diskname=$(echo "${Array_GCE_VM_Details[2]}"| awk -F'/' '{print $11}')
-   img_diskname=$diskname"-"$(date -d 'today' "+%s")
+   img_diskname="img-"$diskname"-"$(date -d 'today' "+%s")
    export_date="$(date +%F)"
-   logTime "Disk_Project: $diskproject Disk_Region: $diskregion Disk_Zone: $diskzone Instance Name: $instance Disk: $diskname ImageDisk: $img_diskname "
-   create_image&&\
-   export_image
+   ## logTime "Export_Date: $export_date Disk_Project: $diskproject Disk_Region: $diskregion Disk_Zone: $diskzone Instance Name: $instance Disk: $diskname ImageDisk: $img_diskname Bucket: $BUCKET_NAME"
+   echo $export_date $diskproject $diskregion $diskzone $instance $diskname $img_diskname $IMAGE_FORMAT $BUCKET_NAME| xargs -P8 -I {} bash -c 'export_instance "$@"' $Func_Name {} 
+   ## create_image&&\
+   ## export_image
 done
 IFS=$OldIFS

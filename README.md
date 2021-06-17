@@ -14,7 +14,7 @@ Supported image formats are `vmdk` (default), `vhdx`, `vpc`, `vdi`, and `qcow2`.
 You can run the script from your **bash console** or from [Google Cloud Shell](https://cloud.google.com/shell/docs/quickstart).
 You need login in **Google Cloud SDK** before running script, for a fast execution run it in **Cloud Shell**
 
-Script will not ask you disk to export, if you want to export all available disks.
+Script will export all available disks.
 
 ## Requirements
 
@@ -53,11 +53,11 @@ You must enable permission to Cloud Build service account, answer _yes_ to the n
 ```
 The following IAM permissions are needed for this operation:
 [roles/iam.serviceAccountTokenCreator
-serviceAccount:347021062934@cloudbuild.gserviceaccount.com
+serviceAccount:999999999999@cloudbuild.gserviceaccount.com  
 roles/compute.admin
-serviceAccount:347021062934@cloudbuild.gserviceaccount.com
+serviceAccount:999999999999@cloudbuild.gserviceaccount.com  
 roles/iam.serviceAccountUser
-serviceAccount:347021062934@cloudbuild.gserviceaccount.com]
+serviceAccount:999999999999@cloudbuild.gserviceaccount.com]
 
 Would you like to add the permissions (Y/n)?  y
 ```
