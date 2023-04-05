@@ -6,6 +6,8 @@
 ##
 ## This software comes with ABSOLUTELY NO WARRANTY.
 ## This is free software, and you are welcome to redistribute it under certain conditions.
+## using xargs -P (multi-threaded mode) with hardcoded value set to 8.
+
 Func_Name="$0.Main"
 IMAGE_FORMAT=""
 BUCKET_NAME="js-project-images"
@@ -77,6 +79,7 @@ do
    diskname=$(echo "${Array_GCE_VM_Details[2]}"| awk -F'/' '{print $11}')
    img_diskname="img-"$diskname"-"$(date -d 'today' "+%s")
    export_date="$(date +%F)"
+   ## starting export using xargs -P (multi-threaded mode) with hardcoded value set to 8.
    ## logTime "Export_Date: $export_date Disk_Project: $diskproject Disk_Region: $diskregion Disk_Zone: $diskzone Instance Name: $instance Disk: $diskname ImageDisk: $img_diskname Bucket: $BUCKET_NAME"
    echo $export_date $diskproject $diskregion $diskzone $instance $diskname $img_diskname $IMAGE_FORMAT $BUCKET_NAME| xargs -P8 -I {} bash -c 'export_instance "$@"' $Func_Name {} 
    ## create_image&&\
