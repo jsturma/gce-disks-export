@@ -14,7 +14,8 @@ Supported image formats are `vmdk` (default), `vhdx`, `vpc`, `vdi`, and `qcow2`.
 You can run the script from your **bash console** or from [Google Cloud Shell](https://cloud.google.com/shell/docs/quickstart).
 You need login in **Google Cloud SDK** before running script, for a fast execution run it in **Cloud Shell**
 
-Script will export all available disks.
+
+Script will export all available disks in multi-threaded mode with hardcoded value set to 8.
 
 ## Requirements
 
@@ -22,6 +23,7 @@ Script will export all available disks.
   - gcloud
   - gsutil
   - Bash CLI
+  - xargs 
   - JQ parser
 
 ## Export disks
