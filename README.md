@@ -1,5 +1,5 @@
 # Under Contruction 
-# fork from https://github.com/biofer76/gce-disks-export
+fork from https://github.com/biofer76/gce-disks-export
 # Export Google Compute Engine Image - Command Line Tool
 
 Export Google Cloud instances disks in your favorite format and store in [Cloud Storage](https://cloud.google.com/storage/).
